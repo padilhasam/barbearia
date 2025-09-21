@@ -17,7 +17,7 @@ class ClienteController extends Controller
         $this->startSession();
 
         if (isset($_SESSION['cliente_id'])) {
-            $this->redirect(BASE_URL . '/clientes/index');
+            $this->redirect(BASE_URL . '/layouts/cliente');
         }
 
         $erro = $_SESSION['login_erro'] ?? '';
@@ -52,7 +52,7 @@ class ClienteController extends Controller
 
         if ($cliente && password_verify($senha, $cliente['senha'])) {
             $_SESSION['cliente_id'] = $cliente['id'];
-            $this->redirect(BASE_URL . '/clientes/index');
+            $this->redirect(BASE_URL . '/layouts/cliente');
         } else {
             $_SESSION['login_erro'] = 'E-mail ou senha incorretos';
             $this->redirect(BASE_URL . '/clientes/login');
@@ -94,7 +94,7 @@ class ClienteController extends Controller
             ? $agendamentoModel->getByCliente($cliente['id'])
             : [];
 
-        $this->view('clientes/index', [
+        $this->view('layouts/cliente', [
             'cliente' => $cliente,
             'proximoAgendamento' => $proximoAgendamento,
             'agendamentos' => $agendamentos

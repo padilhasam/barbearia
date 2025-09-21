@@ -1,36 +1,65 @@
+/* Corpo da página */
 body {
     background-color: #121212;
     color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* evita scroll horizontal */
 }
-/* sidebar.css */
+
+/* Sidebar */
 .sidebar {
-    width: 220px; /* largura desejada */
+    width: 220px; /* largura da sidebar */
     height: 100vh;
     position: fixed;
-    top: 80px; /* considera a navbar */
+    top: 80px; /* altura da navbar */
     left: 0;
-    background-color: #212529; /* cor dark */
+    background-color: #212529;
     color: #fff;
     padding: 1rem;
     overflow-y: auto;
+    transition: all 0.3s ease;
+    z-index: 1000;
 }
+
+/* Links da sidebar */
 .sidebar a {
     display: block;
     color: #f5f5f5;
     padding: 10px 20px;
     margin-bottom: 5px;
     border-radius: 8px;
-    transition: all 0.2s;
+    transition: background-color 0.2s, transform 0.2s;
 }
+
 .sidebar a:hover {
     background-color: #dc3545;
     color: #fff;
     text-decoration: none;
+    transform: translateX(5px); /* efeito sutil ao passar o mouse */
 }
+
+/* Conteúdo principal */
 .content {
-    margin-left: 240px;
+    margin-left: 220px; /* alinha à direita da sidebar */
     padding: 2rem;
+    transition: margin-left 0.3s ease;
 }
+
+/* Ajuste para telas pequenas */
+@media (max-width: 768px) {
+    .sidebar {
+        left: -220px; /* esconde sidebar */
+    }
+    .sidebar.show {
+        left: 0; /* exibe sidebar quando toggle ativado */
+    }
+    .content {
+        margin-left: 0; /* conteúdo ocupa toda a largura */
+    }
+}
+
+/* Cards administrativos */
 .card-admin {
     border-radius: 15px;
     padding: 20px;
@@ -40,7 +69,16 @@ body {
     box-shadow: 0 6px 20px rgba(0,0,0,0.15);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .card-admin:hover {
     transform: translateY(-5px);
     box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+}
+
+/* Ajustes de responsividade para cards */
+@media (max-width: 576px) {
+    .card-admin {
+        padding: 15px;
+        font-size: 0.9rem;
+    }
 }

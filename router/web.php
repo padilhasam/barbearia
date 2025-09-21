@@ -5,7 +5,7 @@ $router->add('GET', '/', function() {
     session_start();
 
     if (isset($_SESSION['cliente_id'])) {
-        header('Location:' . BASE_URL . '/clientes/index');
+        header('Location:' . BASE_URL . '/layouts/cliente');
     } else {
         header('Location: ' . BASE_URL . '/clientes/login');
     }
@@ -18,7 +18,7 @@ $router->add('POST', '/clientes/login', 'ClienteController@authenticate');
 $router->add('GET', '/clientes/register', 'ClienteController@register');
 $router->add('POST', '/clientes/register', 'ClienteController@store');
 $router->add('GET', '/clientes/logout', 'ClienteController@logout');
-$router->add('GET', '/clientes/index', 'ClienteController@index');
+$router->add('GET', '/layouts/cliente', 'ClienteController@index');
 $router->add('GET', '/clientes/agendamentos', 'ClienteController@agendamentos');
 $router->add('GET', '/clientes/perfil', 'ClienteController@perfil');
 

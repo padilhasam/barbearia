@@ -1,3 +1,14 @@
+<?php
+    if (session_status() === PHP_SESSION_NONE) session_start();
+
+    // Mensagem de erro
+    $erro = $_SESSION['login_erro'] ?? '';
+    unset($_SESSION['login_erro']);
+
+    $success = $_SESSION['register_success'] ?? '';
+    unset($_SESSION['register_success']);
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -24,12 +35,12 @@
             <ul class="navbar-nav ms-auto align-items-center">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-circle me-1"></i> Admin
+                        <i class="bi bi-person-circle me-1"></i> <?= htmlspecialchars($cliente['nome']) ?>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end bg-light text-dark">
-                        <li><a class="dropdown-item text-dark" href="#">Perfil</a></li>
+                        <li><a class="dropdown-item text-dark" href="<?= BASE_URL ?>/clientes/perfil">Perfil</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="#">Sair</a></li>
+                        <li><a class="dropdown-item text-danger" href="<?= BASE_URL ?>/clientes/logout">Sair</a></li>
                     </ul>
                 </li>
             </ul>
@@ -64,6 +75,20 @@
 
     <!-- Conteúdo principal -->
     <main class="content flex-grow-1 p-4">
+
+    <?php if($success): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= $success ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+        </div>
+    <?php endif; ?>
+
+    <?php if($erro): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?= $erro ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+        </div>
+    <?php endif; ?>
 
         <!-- Boas-vindas -->
         <div class="card card-welcome text-center mb-4 bg-light text-dark shadow-lg">
