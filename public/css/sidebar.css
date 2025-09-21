@@ -1,0 +1,95 @@
+/* Reset básico */
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Sidebar */
+#sidebar {
+    width: 220px;
+    background-color: #212529;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    padding-top: 70px; /* espaço maior para o toggle */
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+#sidebar ul.nav {
+    padding-left: 0;
+    margin: 0;
+}
+
+#sidebar .nav-link {
+    color: #f8f9fa;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+#sidebar .nav-link:hover {
+    background-color: #343a40;
+    text-decoration: none;
+}
+
+/* Sidebar fechado no desktop */
+#sidebar.collapsed {
+    margin-left: -220px;
+}
+
+/* Conteúdo principal */
+.content {
+    margin-left: 220px;
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+}
+
+/* Ajusta conteúdo quando sidebar fechado */
+.content.expanded {
+    margin-left: 0;
+}
+
+/* Botão toggle dentro do navbar */
+#sidebarCollapseBtn {
+    position: static; /* não mais fixo */
+    background-color: #212529;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 14px; /* botão maior */
+    font-size: 1.25rem; /* aumenta o ícone */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+#sidebarCollapseBtn i {
+    font-size: 1.5rem; /* ícone proporcional ao botão */
+}
+
+#sidebarCollapseBtn:hover {
+    background-color: #343a40;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -220px;
+        padding-top: 60px; /* ajusta espaço no mobile */
+    }
+
+    #sidebar.show {
+        margin-left: 0;
+    }
+
+    .content {
+        margin-left: 0;
+    }
+}

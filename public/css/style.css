@@ -1,0 +1,22 @@
+/* Estilo geral */
+body {
+    font-family: Arial, sans-serif;
+    background: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar cliente */
+.navbar-nav .nav-link {
+    font-weight: 500;
+    color: #333;
+}
+
+.navbar-nav .nav-link.text-danger {
+    color: #dc3545 !important;
+}
+
+/* Alertas */
+.alert {
+    margin-top: 15px;
+}

@@ -1,0 +1,96 @@
+Listagem de caminhos de pasta
+O número de série do volume é 62BC-0FAA
+C:.
+|   estrutura.txt
+|   Readme.txt
+|   
++---app
+|   +---controllers
+|   |       AgendamentoController.php
+|   |       AuthController.php
+|   |       BarbeiroController.php
+|   |       ClienteController.php
+|   |       PagamentoController.php
+|   |       ServicoController.php
+|   |       UsuarioController.php
+|   |       
+|   +---models
+|   |       Agendamento.php
+|   |       Barbeiro.php
+|   |       Caixa.php
+|   |       Cliente.php
+|   |       Movimentacao.php
+|   |       Pagamento.php
+|   |       Servico.php
+|   |       Usuario.php
+|   |       
+|   \---views
+|       +---agendamentos
+|       |       create.php
+|       |       edit.php
+|       |       index.php
+|       |       
+|       +---barbeiros
+|       |       index.php
+|       |       
+|       +---caixa
+|       |       index.php
+|       |       movimentacoes.php
+|       |       
+|       +---clientes
+|       |       agendamento.php
+|       |       home.php
+|       |       index.php
+|       |       login.php
+|       |       perfil.php
+|       |       register.php
+|       |       
+|       +---layouts
+|       |       admin.php
+|       |       cliente.php
+|       |       footer.php
+|       |       header.php
+|       |       
+|       +---pagamentos
+|       |       adicionar.php
+|       |       detalhe.php
+|       |       index.php
+|       |       
+|       +---servicos
+|       |       adicionar.php
+|       |       editar.php
+|       |       index.php
+|       |       
+|       \---usuarios
+|               login.php
+|               perfil.php
+|               register.php
+|               
++---config
+|       config.php
+|       database.php
+|       
++---core
+|       AuthController.php
+|       Controller.php
+|       Database.php
+|       Model.php
+|       Router.php
+|       
++---public
+|   |   .htaccess
+|   |   gerar-hash.php
+|   |   index.php
+|   |   teste-conexao.php
+|   |   teste-senha.php
+|   |   
+|   +---css
+|   |       style.css
+|   |       
+|   +---img
+|   \---js
+|           script.js
+|           
+\---router
+        web.php
+        
