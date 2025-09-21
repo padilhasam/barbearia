@@ -29,9 +29,9 @@
                             <i class="bi bi-person-circle me-1"></i> Admin
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end bg-light text-dark">
-                            <li><a class="dropdown-item text-dark" href="#">Perfil</a></li>
+                            <li><a class="dropdown-item text-dark" href="<?= BASE_URL ?>/admin/perfil">Perfil</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item text-danger" href="#">Sair</a></li>
+                            <li><a class="dropdown-item text-danger" href="<?= BASE_URL ?>/admin/logout">Sair</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -49,22 +49,22 @@
             </div>
             <ul class="nav flex-column pt-3">
                 <li class="nav-item">
-                    <a href="#" class="nav-link"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+                    <a href="<?= BASE_URL ?>/admin/painel" class="nav-link"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link"><i class="bi bi-people me-2"></i> Clientes</a>
+                    <a href="<?= BASE_URL ?>/admin/clientes" class="nav-link"><i class="bi bi-people me-2"></i> Clientes</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link"><i class="bi bi-calendar-event me-2"></i> Agendamentos</a>
+                    <a href="<?= BASE_URL ?>/admin/agendamentos" class="nav-link"><i class="bi bi-calendar-event me-2"></i> Agendamentos</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link"><i class="bi bi-scissors me-2"></i> Serviços</a>
+                    <a href="<?= BASE_URL ?>/admin/servicos" class="nav-link"><i class="bi bi-scissors me-2"></i> Serviços</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link"><i class="bi bi-person-badge me-2"></i> Funcionários</a>
+                    <a href="<?= BASE_URL ?>/admin/usuarios" class="nav-link"><i class="bi bi-person-badge me-2"></i> Funcionários</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link"><i class="bi bi-bar-chart me-2"></i> Relatórios</a>
+                    <a href="<?= BASE_URL ?>/admin/relatorios" class="nav-link"><i class="bi bi-bar-chart me-2"></i> Relatórios</a>
                 </li>
             </ul>
         </nav>

@@ -1,7 +1,4 @@
-Listagem de caminhos de pasta
-O número de série do volume é 62BC-0FAA
 C:.
-|   estrutura.txt
 |   Readme.txt
 |   
 +---app
@@ -10,15 +7,20 @@ C:.
 |   |       AuthController.php
 |   |       BarbeiroController.php
 |   |       ClienteController.php
+|   |       DashboardController.php
 |   |       PagamentoController.php
 |   |       ServicoController.php
 |   |       UsuarioController.php
+|   |       
+|   +---helpers
+|   |       SessionHelper.php
 |   |       
 |   +---models
 |   |       Agendamento.php
 |   |       Barbeiro.php
 |   |       Caixa.php
 |   |       Cliente.php
+|   |       Dashboard.php
 |   |       Movimentacao.php
 |   |       Pagamento.php
 |   |       Servico.php
@@ -39,11 +41,12 @@ C:.
 |       |       
 |       +---clientes
 |       |       agendamento.php
-|       |       home.php
-|       |       index.php
 |       |       login.php
 |       |       perfil.php
 |       |       register.php
+|       |       
+|       +---dashboard
+|       |       login.php
 |       |       
 |       +---layouts
 |       |       admin.php
@@ -85,11 +88,21 @@ C:.
 |   |   teste-senha.php
 |   |   
 |   +---css
+|   |       admin.css
+|   |       card.css
+|   |       login-dashboard.css
+|   |       login.css
+|   |       sidebar.css
 |   |       style.css
 |   |       
 |   +---img
+|   |       fundo-login.jpg
+|   |       logo.jpg
+|   |       logo.png
+|   |       
 |   \---js
 |           script.js
+|           sidebar.js
 |           
 \---router
         web.php

@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../../core/Controller.php';
+require_once __DIR__ . '/../helpers/SessionHelper.php';
 
 class ClienteController extends Controller
 {
@@ -18,6 +19,7 @@ class ClienteController extends Controller
 
         if (isset($_SESSION['cliente_id'])) {
             $this->redirect(BASE_URL . '/layouts/cliente');
+            exit;
         }
 
         $erro = $_SESSION['login_erro'] ?? '';
@@ -32,6 +34,7 @@ class ClienteController extends Controller
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             $this->redirect(BASE_URL . '/clientes/login');
+            exit;
         }
 
         $email = trim($_POST['email'] ?? '');
@@ -40,11 +43,13 @@ class ClienteController extends Controller
         if (empty($email) || empty($senha)) {
             $_SESSION['login_erro'] = 'E-mail ou senha incorretos';
             $this->redirect(BASE_URL . '/clientes/login');
+            exit;
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $_SESSION['login_erro'] = 'E-mail inválido';
             $this->redirect(BASE_URL . '/clientes/login');
+            exit;
         }
 
         $clienteModel = $this->model('Cliente');
@@ -52,10 +57,13 @@ class ClienteController extends Controller
 
         if ($cliente && password_verify($senha, $cliente['senha'])) {
             $_SESSION['cliente_id'] = $cliente['id'];
+            $_SESSION['cliente_nome'] = $cliente['nome'];
             $this->redirect(BASE_URL . '/layouts/cliente');
+            exit;
         } else {
             $_SESSION['login_erro'] = 'E-mail ou senha incorretos';
             $this->redirect(BASE_URL . '/clientes/login');
+            exit;
         }
     }
 
@@ -63,17 +71,15 @@ class ClienteController extends Controller
     {
         $this->startSession();
 
-        $_SESSION = [];
-        if (ini_get("session.use_cookies")) {
-            $params = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000,
-                $params["path"], $params["domain"],
-                $params["secure"], $params["httponly"]
-            );
-        }
+        // Limpa todos os dados da sessão do cliente
+        unset($_SESSION['cliente_id'], $_SESSION['cliente_nome']);
 
+        // Destrói a sessão
         session_destroy();
+
+        // Redireciona para o login
         $this->redirect(BASE_URL . '/clientes/login');
+        exit;
     }
 
     // ==================== DASHBOARD ====================
@@ -82,6 +88,7 @@ class ClienteController extends Controller
         $cliente = $this->getClienteLogado();
         if (!$cliente) {
             $this->redirect(BASE_URL . '/clientes/login');
+            exit;
         }
 
         $agendamentoModel = $this->model('Agendamento');
@@ -105,6 +112,7 @@ class ClienteController extends Controller
     public function register()
     {
         $this->startSession();
+
         $erro = $_SESSION['register_erro'] ?? '';
         unset($_SESSION['register_erro']);
 
@@ -117,6 +125,7 @@ class ClienteController extends Controller
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             $this->redirect(BASE_URL . '/clientes/register');
+            exit;
         }
 
         $nome = trim($_POST['nome'] ?? '');
@@ -124,33 +133,32 @@ class ClienteController extends Controller
         $email = trim($_POST['email'] ?? '');
         $senha = trim($_POST['senha'] ?? '');
 
-        // Valida campos obrigatórios
         if (empty($nome) || empty($telefone) || empty($senha)) {
             $_SESSION['register_erro'] = 'Preencha todos os campos obrigatórios';
             $this->redirect(BASE_URL . '/clientes/register');
+            exit;
         }
 
-        // Valida e-mail
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $_SESSION['register_erro'] = 'E-mail inválido';
             $this->redirect(BASE_URL . '/clientes/register');
+            exit;
         }
 
         $clienteModel = $this->model('Cliente');
 
-        // Verifica duplicidade de e-mail
         if ($clienteModel->findByEmail($email)) {
             $_SESSION['register_erro'] = 'E-mail já cadastrado';
             $this->redirect(BASE_URL . '/clientes/register');
+            exit;
         }
 
-        // Verifica duplicidade de telefone
         if ($clienteModel->findByTelefone($telefone)) {
             $_SESSION['register_erro'] = 'Telefone já cadastrado';
             $this->redirect(BASE_URL . '/clientes/register');
+            exit;
         }
 
-        // Cria cliente
         $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
         $clienteModel->create([
             'nome' => $nome,
@@ -159,11 +167,10 @@ class ClienteController extends Controller
             'senha' => $senhaHash
         ]);
 
-        // Mensagem de sucesso
         $_SESSION['register_success'] = 'Registro realizado com sucesso! Faça login para acessar sua conta.';
         $this->redirect(BASE_URL . '/clientes/login');
+        exit;
     }
-
 
     // ==================== AGENDAMENTOS ====================
     public function agendamentos()
@@ -171,6 +178,7 @@ class ClienteController extends Controller
         $cliente = $this->getClienteLogado();
         if (!$cliente) {
             $this->redirect(BASE_URL . '/clientes/login');
+            exit;
         }
 
         $agendamentoModel = $this->model('Agendamento');
@@ -190,6 +198,7 @@ class ClienteController extends Controller
         $cliente = $this->getClienteLogado();
         if (!$cliente) {
             $this->redirect(BASE_URL . '/clientes/login');
+            exit;
         }
 
         $this->view('clientes/perfil', ['cliente' => $cliente], 'cliente');

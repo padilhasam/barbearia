@@ -22,14 +22,20 @@ $router->add('GET', '/layouts/cliente', 'ClienteController@index');
 $router->add('GET', '/clientes/agendamentos', 'ClienteController@agendamentos');
 $router->add('GET', '/clientes/perfil', 'ClienteController@perfil');
 
+// ================= PAINEL ADMIN =================
+$router->add('GET', '/admin', 'DashboardController@login');          // Tela de login
+$router->add('POST', '/admin/login', 'DashboardController@autenticar'); // Autenticar login
+$router->add('GET', '/admin/painel', 'DashboardController@painel');  // Painel/admin.php
+$router->add('GET', '/admin/logout', 'DashboardController@logout');     // Logout
+
 // ================= USUÁRIOS ADMIN =================
-$router->add('GET', '/usuarios/login', 'UsuarioController@login');
-$router->add('POST', '/usuarios/login', 'UsuarioController@authenticate');
-$router->add('GET', '/usuarios/logout', 'UsuarioController@logout');
-$router->add('GET', '/usuarios/register', 'UsuarioController@register');
-$router->add('POST', '/usuarios/store', 'UsuarioController@store');
-$router->add('GET', '/usuarios/perfil', 'UsuarioController@perfil');
-$router->add('POST', '/usuarios/atualizar-perfil', 'UsuarioController@atualizarPerfil');
+// $router->add('GET', '/usuarios/login', 'UsuarioController@login');
+// $router->add('POST', '/usuarios/login', 'UsuarioController@authenticate');
+// $router->add('GET', '/usuarios/logout', 'UsuarioController@logout');
+// $router->add('GET', '/usuarios/register', 'UsuarioController@register');
+// $router->add('POST', '/usuarios/store', 'UsuarioController@store');
+// $router->add('GET', '/usuarios/perfil', 'UsuarioController@perfil');
+// $router->add('POST', '/usuarios/atualizar-perfil', 'UsuarioController@atualizarPerfil');
 
 // ================= AGENDAMENTOS ADMIN =================
 $router->add('GET', '/admin/agendamentos', 'AgendamentoController@index');
