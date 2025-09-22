@@ -2,46 +2,106 @@
 
 class UsuarioController extends Controller
 {
+    // ==================== LOGIN ====================
     public function login()
     {
-        // Renderiza a view login
-        $this->view('usuarios/login');
+        $this->view('usuarios/login', [], 'administrador');
     }
 
     public function authenticate()
     {
-        // Pega dados do formulário
         $email = $_POST['email'] ?? '';
         $senha = $_POST['senha'] ?? '';
 
-        // Exemplo simples (futuramente conectar no banco e validar)
-        if ($email === 'admin@teste.com' && $senha === '123456') {
-            $_SESSION['usuario'] = $email;
-            header("Location: /agendamentos");
-            exit;
+        $usuarioModel = $this->model('Usuario');
+        $usuario = $usuarioModel->findByEmail($email);
+
+        if ($usuario && password_verify($senha, $usuario['senha'])) {
+            $_SESSION['usuario'] = $usuario['nome'];
+            $this->redirect(BASE_URL . '/admin/usuarios');
         } else {
             $erro = "E-mail ou senha inválidos!";
-            $this->view('usuarios/login', ['erro' => $erro]);
+            $this->view('usuarios/login', ['erro' => $erro], 'administrador');
         }
     }
 
     public function logout()
     {
         session_destroy();
-        header("Location: /usuarios/login");
-        exit;
+        $this->redirect(BASE_URL . '/admin');
     }
 
+    // ==================== CADASTRO ====================
     public function register()
     {
-        $this->view('usuarios/register');
+        $this->view('usuarios/register', [], 'administrador');
     }
 
     public function store()
     {
-        // Aqui vai a lógica para cadastrar no banco
-        // Depois redireciona
-        header("Location: /usuarios/login");
-        exit;
+        $nome   = trim($_POST['nome']);
+        $email  = trim($_POST['email']);
+        $senha  = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+        $perfil = $_POST['perfil'] ?? 'BARBEIRO';
+        $status = $_POST['status'] ?? 'ATIVO';
+
+        $usuarioModel = $this->model('Usuario');
+        $usuarioModel->create([
+            'nome'   => $nome,
+            'email'  => $email,
+            'senha'  => $senha,
+            'perfil' => $perfil,
+            'status' => $status
+        ]);
+
+        $this->redirect(BASE_URL . '/admin/usuarios');
+    }
+
+    // ==================== LISTAGEM ====================
+    public function index()
+    {
+        $usuarioModel = $this->model('Usuario');
+        $usuarios = $usuarioModel->all(); // Lista todos os usuários do banco
+
+        $this->view('usuarios/index', ['usuarios' => $usuarios], 'administrador');
+    }
+
+    // ==================== EDIÇÃO ====================
+    public function edit($id)
+    {
+        $usuarioModel = $this->model('Usuario');
+        $usuario = $usuarioModel->find($id);
+
+        if (!$usuario) {
+            $this->redirect(BASE_URL . '/admin/usuarios');
+        }
+
+        $this->view('usuarios/register', ['usuario' => $usuario], 'administrador');
+    }
+
+    public function update($id)
+    {
+        $usuarioModel = $this->model('Usuario');
+
+        $data = [
+            'nome'   => trim($_POST['nome']),
+            'email'  => trim($_POST['email']),
+            'senha'  => password_hash($_POST['senha'], PASSWORD_DEFAULT),
+            'perfil' => $_POST['perfil'] ?? 'BARBEIRO',
+            'status' => $_POST['status'] ?? 'ATIVO'
+        ];
+
+        $usuarioModel->update($id, $data);
+
+        $this->redirect(BASE_URL . '/admin/usuarios');
+    }
+
+    // ==================== EXCLUSÃO ====================
+    public function delete($id)
+    {
+        $usuarioModel = $this->model('Usuario');
+        $usuarioModel->delete($id);
+
+        $this->redirect(BASE_URL . '/admin/usuarios');
     }
 }

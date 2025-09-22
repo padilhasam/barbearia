@@ -1,7 +1,11 @@
 <?php
 
 require_once __DIR__ . '/../../core/Controller.php';
-require_once __DIR__ . '/../models/Usuario.php'; // Certifica que o model é carregado
+require_once __DIR__ . '/../models/Usuario.php';
+require_once __DIR__ . '/../models/Agendamento.php';
+require_once __DIR__ . '/../models/Cliente.php';
+require_once __DIR__ . '/../models/Servico.php';
+require_once __DIR__ . '/../models/Pagamento.php';
 
 class DashboardController extends Controller
 {
@@ -54,11 +58,9 @@ class DashboardController extends Controller
             $_SESSION['login_erro'] = "Email ou senha incorretos.";
         }
 
-        // Se chegou aqui, é erro de login
         $this->redirect(BASE_URL . '/admin');
         exit;
     }
-
 
     // ==================== PAINEL ====================
     public function painel()
@@ -72,8 +74,27 @@ class DashboardController extends Controller
 
         $usuario = $_SESSION['admin_usuario'] ?? 'Admin';
 
-        // Renderiza layout admin
-        $this->view('layouts/admin', ['usuario' => $usuario]);
+        // Instancia a model de agendamentos
+        $agendamentoModel = $this->model('Agendamento');
+        $agendamentos = $agendamentoModel->getAll(); // método correto
+
+        // Totalizadores
+        $totalClientes = count($this->model('Cliente')->getAll());
+        $agendamentosHoje = count(array_filter($agendamentos, function($a) {
+            return $a['data'] === date('Y-m-d');
+        }));
+        $servicosAtivos = count($this->model('Servico')->getAll());
+        $receitaHoje = $this->model('Pagamento')->getReceitaHoje();
+
+        // Renderiza a view do painel dentro do layout administrador
+        $this->view('dashboard/painel', [
+            'usuario' => $usuario,
+            'agendamentos' => $agendamentos,
+            'totalClientes' => $totalClientes,
+            'agendamentosHoje' => $agendamentosHoje,
+            'servicosAtivos' => $servicosAtivos,
+            'receitaHoje' => $receitaHoje
+        ], 'administrador');
     }
 
     // ==================== LOGOUT ====================

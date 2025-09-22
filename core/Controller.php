@@ -53,11 +53,14 @@ class Controller
             return;
         }
 
-        // Monta caminho do layout
-        $layoutFile = __DIR__ . '/../app/views/layouts/' . $layout . '.php';
+        // Ajuste: pasta e arquivo do layout separados
+        $layoutFolder = $layout;     // pasta dentro de layouts
+        $layoutFileName = $layout === 'administrador' ? 'admin.php' : ($layout === 'cliente' ? 'cliente.php' : $layout . '.php');
+
+        $layoutFile = __DIR__ . '/../app/views/layouts/' . $layoutFolder . '/' . $layoutFileName;
 
         if (!file_exists($layoutFile)) {
-            die("Layout {$layout} não encontrado.");
+            die("Layout {$layout} não encontrado em layouts/{$layoutFolder}/{$layoutFileName}");
         }
 
         // O layout deve usar a variável $viewFile para incluir a view

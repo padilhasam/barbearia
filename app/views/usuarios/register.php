@@ -1,70 +1,68 @@
-<?php include __DIR__ . '/../layouts/header.php'; ?>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Usuário</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/barbearia/public/css/style.css">
+    <link rel="stylesheet" href="/barbearia/public/css/register-user.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-dark text-light d-flex flex-column min-vh-100">
 
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-    <div class="card shadow-sm p-4" style="width: 100%; max-width: 450px;">
-        <h3 class="card-title text-center mb-4">📝 Cadastro de Usuário</h3>
+    <main class="flex-grow-1 d-flex align-items-center justify-content-center">
+        <div class="card shadow-lg p-4 rounded" style="max-width: 420px; width: 100%; background-color: #1e1e1e; color: #f5f5dc;">
+            <h2 class="text-center mb-4">Cadastrar Usuário</h2>
 
-        <!-- Mensagem de erro -->
-        <?php if (!empty($erro)) : ?>
-            <div class="alert alert-danger"><?= $erro; ?></div>
-        <?php endif; ?>
+            <form method="POST" action="/usuarios/store">
+                <div class="mb-3">
+                    <label for="nome" class="form-label">Nome</label>
+                    <input type="text" name="nome" id="nome" class="form-control bg-dark text-light border-secondary" required>
+                </div>
 
-        <?php if (!empty($sucesso)) : ?>
-            <div class="alert alert-success"><?= $sucesso; ?></div>
-        <?php endif; ?>
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-mail</label>
+                    <input type="email" name="email" id="email" class="form-control bg-dark text-light border-secondary" required>
+                </div>
 
-        <form action="/usuarios/salvar" method="POST">
+                <div class="mb-3">
+                    <label for="senha" class="form-label">Senha</label>
+                    <input type="password" name="senha" id="senha" class="form-control bg-dark text-light border-secondary" required>
+                </div>
 
-            <!-- Nome -->
-            <div class="mb-3">
-                <label for="nome" class="form-label">Nome</label>
-                <input type="text" name="nome" id="nome" class="form-control" placeholder="Digite seu nome" required>
-            </div>
+                <div class="mb-3">
+                    <label for="perfil" class="form-label">Perfil</label>
+                    <select name="perfil" id="perfil" class="form-select bg-dark text-light border-secondary">
+                        <option value="ADMIN">Admin</option>
+                        <option value="BARBEIRO" selected>Barbeiro</option>
+                    </select>
+                </div>
 
-            <!-- Email -->
-            <div class="mb-3">
-                <label for="email" class="form-label">E-mail</label>
-                <input type="email" name="email" id="email" class="form-control" placeholder="Digite seu e-mail" required>
-            </div>
+                <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <select name="status" id="status" class="form-select bg-dark text-light border-secondary">
+                        <option value="ATIVO" selected>Ativo</option>
+                        <option value="INATIVO">Inativo</option>
+                    </select>
+                </div>
 
-            <!-- Telefone -->
-            <div class="mb-3">
-                <label for="telefone" class="form-label">Telefone</label>
-                <input type="text" name="telefone" id="telefone" class="form-control" placeholder="(00) 00000-0000" required>
-            </div>
+                <button type="submit" class="btn btn-light w-100 mb-2">Cadastrar</button>
+                <a href="/usuarios/login" class="btn btn-outline-light w-100">Voltar para Login</a>
+            </form>
+        </div>
+    </main>
 
-            <!-- Senha -->
-            <div class="mb-3">
-                <label for="senha" class="form-label">Senha</label>
-                <input type="password" name="senha" id="senha" class="form-control" placeholder="Digite sua senha" required>
-            </div>
+    <footer class="bg-black text-light text-center py-3 mt-auto small">
+        <div class="mb-2">&copy; <?= date('Y'); ?> Tonkelski Barber Shop - Todos os direitos reservados</div>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="https://www.instagram.com/sua_barbearia" target="_blank" class="text-light fs-5"><i class="bi bi-instagram"></i></a>
+            <a href="https://www.facebook.com/sua_barbearia" target="_blank" class="text-light fs-5"><i class="bi bi-facebook"></i></a>
+            <a href="https://wa.me/5511999999999" target="_blank" class="text-light fs-5"><i class="bi bi-whatsapp"></i></a>
+            <a href="https://www.tiktok.com/@sua_barbearia" target="_blank" class="text-light fs-5"><i class="bi bi-tiktok"></i></a>
+        </div>
+    </footer>
 
-            <!-- Confirmar Senha -->
-            <div class="mb-3">
-                <label for="confirma_senha" class="form-label">Confirmar Senha</label>
-                <input type="password" name="confirma_senha" id="confirma_senha" class="form-control" placeholder="Repita a senha" required>
-            </div>
-
-            <!-- Tipo de Usuário -->
-            <div class="mb-3">
-                <label for="tipo" class="form-label">Tipo de Usuário</label>
-                <select name="tipo" id="tipo" class="form-select" required>
-                    <option value="">-- Selecione --</option>
-                    <option value="cliente">Cliente</option>
-                    <option value="admin">Administrador</option>
-                </select>
-            </div>
-
-            <!-- Botão -->
-            <div class="d-grid mt-3">
-                <button type="submit" class="btn btn-primary">💾 Cadastrar</button>
-            </div>
-
-            <div class="text-center mt-2">
-                <a href="/usuarios/login">Já tem uma conta? Faça login</a>
-            </div>
-        </form>
-    </div>
-</div>
-
-<?php include __DIR__ . '/../layouts/footer.php'; ?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

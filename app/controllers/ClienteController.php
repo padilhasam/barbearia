@@ -18,7 +18,7 @@ class ClienteController extends Controller
         $this->startSession();
 
         if (isset($_SESSION['cliente_id'])) {
-            $this->redirect(BASE_URL . '/layouts/cliente');
+            $this->redirect(BASE_URL . '/clientes/index');
             exit;
         }
 
@@ -58,7 +58,7 @@ class ClienteController extends Controller
         if ($cliente && password_verify($senha, $cliente['senha'])) {
             $_SESSION['cliente_id'] = $cliente['id'];
             $_SESSION['cliente_nome'] = $cliente['nome'];
-            $this->redirect(BASE_URL . '/layouts/cliente');
+            $this->redirect(BASE_URL . '/clientes/index');
             exit;
         } else {
             $_SESSION['login_erro'] = 'E-mail ou senha incorretos';
@@ -71,13 +71,9 @@ class ClienteController extends Controller
     {
         $this->startSession();
 
-        // Limpa todos os dados da sessão do cliente
         unset($_SESSION['cliente_id'], $_SESSION['cliente_nome']);
-
-        // Destrói a sessão
         session_destroy();
 
-        // Redireciona para o login
         $this->redirect(BASE_URL . '/clientes/login');
         exit;
     }
@@ -101,7 +97,7 @@ class ClienteController extends Controller
             ? $agendamentoModel->getByCliente($cliente['id'])
             : [];
 
-        $this->view('layouts/cliente', [
+        $this->view('layouts/cliente/cliente', [
             'cliente' => $cliente,
             'proximoAgendamento' => $proximoAgendamento,
             'agendamentos' => $agendamentos
@@ -116,7 +112,7 @@ class ClienteController extends Controller
         $erro = $_SESSION['register_erro'] ?? '';
         unset($_SESSION['register_erro']);
 
-        $this->view('clientes/register', ['erro' => $erro], null); // layout null
+        $this->view('clientes/register', ['erro' => $erro], null);
     }
 
     public function store()

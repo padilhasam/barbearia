@@ -67,18 +67,24 @@
          */
         public function update(int $id, array $data)
         {
-            $stmt = self::$db->prepare(
-                "UPDATE {$this->table} 
-                SET nome = :nome, telefone = :telefone, email = :email, senha = :senha 
-                WHERE id = :id"
-            );
-            return $stmt->execute([
-                'nome'     => $data['nome'],
+            $fields = [
+                'nome' => $data['nome'],
                 'telefone' => $data['telefone'],
-                'email'    => $data['email'] ?? null,
-                'senha'    => $data['senha'],
-                'id'       => $id
-            ]);
+                'email' => $data['email'] ?? null,
+                'id' => $id
+            ];
+
+            $sql = "UPDATE {$this->table} SET nome = :nome, telefone = :telefone, email = :email";
+
+            if (!empty($data['senha'])) {
+                $sql .= ", senha = :senha";
+                $fields['senha'] = $data['senha'];
+            }
+
+            $sql .= " WHERE id = :id";
+
+            $stmt = self::$db->prepare($sql);
+            return $stmt->execute($fields);
         }
 
         /**
