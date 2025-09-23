@@ -1,0 +1,68 @@
+/* Desktop: tabela normal */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    display: table-header-group; /* garante que o cabeçalho fique visível */
+}
+
+tbody td a {
+    display: inline-block;
+    z-index: 1;
+}
+
+tbody tr {
+    display: table-row;
+}
+
+tbody td {
+    display: table-cell;
+}
+
+/* Mobile: transformar linhas em cards */
+@media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+        width: 100%;
+    }
+
+    thead {
+        display: none; /* esconde cabeçalho apenas no mobile */
+    }
+
+    tbody tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid #444;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        background-color: #1c1c1c;
+    }
+
+    tbody td {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.4rem 0.5rem;
+        border-bottom: 1px dashed #555;
+    }
+
+    tbody td:last-child {
+        border-bottom: 0;
+        justify-content: flex-end;
+        gap: 0.5rem;
+    }
+
+    tbody td::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #ccc;
+        flex: 1;
+    }
+
+    .btn-sm {
+        padding: 0.4rem 0.7rem;
+        font-size: 0.9rem;
+    }
+}

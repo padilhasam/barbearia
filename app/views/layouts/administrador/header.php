@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="<?= BASE_URL ?>/css/card.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/css/admin.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/css/sidebar.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>/css/admin-tables.css">
 
     <!-- Favicon (opcional) -->
     <link rel="icon" href="<?= BASE_URL ?>/img/logo.png" type="image/png">

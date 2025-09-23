@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../core/Model.php';
 
 class Agendamento extends Model
 {
-    protected $table = 'agendamentos';
+    protected string $table = 'agendamentos';
 
     /**
      * Retorna todos os agendamentos com informações do cliente, serviço e barbeiro
@@ -16,14 +16,14 @@ class Agendamento extends Model
                        b.id AS barbeiro_id, 
                        u.nome AS barbeiro_nome
                 FROM {$this->table} a
-                JOIN clientes c ON c.id = a.cliente_id
-                JOIN servicos s ON s.id = a.servico_id
-                JOIN barbeiros b ON b.id = a.barbeiro_id
-                JOIN usuarios u ON u.id = b.usuario_id
-                ORDER BY a.data, a.hora";
+                INNER JOIN clientes c ON c.id = a.cliente_id
+                INNER JOIN servicos s ON s.id = a.servico_id
+                INNER JOIN barbeiros b ON b.id = a.barbeiro_id
+                INNER JOIN usuarios u ON u.id = b.usuario_id
+                ORDER BY a.data ASC, a.hora ASC";
 
         $stmt = self::$db->query($sql);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
 
     /**
@@ -32,10 +32,48 @@ class Agendamento extends Model
     public function getByToday(): array
     {
         $stmt = self::$db->prepare(
-            "SELECT * FROM {$this->table} WHERE data = :hoje ORDER BY hora"
+            "SELECT a.*, 
+                    c.nome AS cliente_nome, 
+                    s.nome AS servico_nome, 
+                    u.nome AS barbeiro_nome
+             FROM {$this->table} a
+             INNER JOIN clientes c ON c.id = a.cliente_id
+             INNER JOIN servicos s ON s.id = a.servico_id
+             INNER JOIN barbeiros b ON b.id = a.barbeiro_id
+             INNER JOIN usuarios u ON u.id = b.usuario_id
+             WHERE a.data = :hoje
+             ORDER BY a.hora ASC"
         );
+
         $stmt->execute(['hoje' => date('Y-m-d')]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
+    }
+
+    /**
+     * Retorna próximos agendamentos a partir de hoje
+     */
+    public function getUpcoming(int $limit = 10): array
+    {
+        $stmt = self::$db->prepare(
+            "SELECT a.*, 
+                    c.nome AS cliente_nome, 
+                    s.nome AS servico_nome, 
+                    u.nome AS barbeiro_nome
+             FROM {$this->table} a
+             INNER JOIN clientes c ON c.id = a.cliente_id
+             INNER JOIN servicos s ON s.id = a.servico_id
+             INNER JOIN barbeiros b ON b.id = a.barbeiro_id
+             INNER JOIN usuarios u ON u.id = b.usuario_id
+             WHERE a.data >= :hoje
+             ORDER BY a.data ASC, a.hora ASC
+             LIMIT :limit"
+        );
+
+        $stmt->bindValue(':hoje', date('Y-m-d'));
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
 
     /**
@@ -47,6 +85,7 @@ class Agendamento extends Model
             "INSERT INTO {$this->table} (cliente_id, servico_id, barbeiro_id, data, hora, status) 
              VALUES (:cliente_id, :servico_id, :barbeiro_id, :data, :hora, :status)"
         );
+
         return $stmt->execute([
             'cliente_id'  => $data['cliente_id'],
             'servico_id'  => $data['servico_id'],
@@ -99,18 +138,19 @@ class Agendamento extends Model
     public function checkConflict(int $barbeiro_id, string $data, string $hora): bool
     {
         $stmt = self::$db->prepare(
-            "SELECT * FROM {$this->table} 
+            "SELECT 1 FROM {$this->table} 
              WHERE barbeiro_id = :barbeiro_id 
                AND data = :data 
                AND hora = :hora 
                AND status != 'CANCELADO'"
         );
+
         $stmt->execute([
             'barbeiro_id' => $barbeiro_id,
             'data'        => $data,
             'hora'        => $hora
         ]);
 
-        return $stmt->fetch(PDO::FETCH_ASSOC) ? true : false;
+        return (bool) $stmt->fetchColumn();
     }
 }

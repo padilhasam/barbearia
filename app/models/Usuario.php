@@ -38,20 +38,23 @@ class Usuario
 
     public function update($id, $data)
     {
-        $sql = "UPDATE {$this->table} SET 
-                    nome = :nome,
-                    email = :email,
-                    senha = :senha,
-                    perfil = :perfil,
-                    status = :status
-                WHERE id = :id";
+        $fields = "nome = :nome, email = :email, perfil = :perfil, status = :status";
+        if (!empty($data['senha'])) {
+            $fields .= ", senha = :senha";
+        }
+
+        $sql = "UPDATE {$this->table} SET {$fields} WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':nome', $data['nome']);
         $stmt->bindParam(':email', $data['email']);
-        $stmt->bindParam(':senha', $data['senha']);
         $stmt->bindParam(':perfil', $data['perfil']);
         $stmt->bindParam(':status', $data['status']);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        if (!empty($data['senha'])) {
+            $stmt->bindParam(':senha', $data['senha']);
+        }
+
         return $stmt->execute();
     }
 
@@ -76,5 +79,25 @@ class Usuario
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function find($id)
+    {
+        return $this->findById($id);
+    }
+
+    public function existsEmail($email, $excludeId = null)
+    {
+        $sql = "SELECT COUNT(*) FROM {$this->table} WHERE email = :email";
+        if ($excludeId) {
+            $sql .= " AND id != :id";
+        }
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':email', $email);
+        if ($excludeId) {
+            $stmt->bindParam(':id', $excludeId, PDO::PARAM_INT);
+        }
+        $stmt->execute();
+        return $stmt->fetchColumn() > 0;
     }
 }

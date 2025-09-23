@@ -41,13 +41,13 @@ $router->add('GET', '/admin/usuarios/editar/{id}', 'UsuarioController@edit');   
 $router->add('POST', '/admin/usuarios/atualizar/{id}', 'UsuarioController@update'); // Atualizar usuário
 $router->add('GET', '/admin/usuarios/excluir/{id}', 'UsuarioController@delete');    // Excluir usuário
 
-// ================= AGENDAMENTOS ADMIN =================
+// AGENDAMENTOS ADMIN
 $router->add('GET', '/admin/agendamentos', 'AgendamentoController@index');
-$router->add('GET', '/admin/agendamentos/adicionar', 'AgendamentoController@adicionar');
-$router->add('POST', '/admin/agendamentos/salvar', 'AgendamentoController@salvar');
-$router->add('GET', '/admin/agendamentos/editar/{id}', 'AgendamentoController@editar');
-$router->add('POST', '/admin/agendamentos/atualizar/{id}', 'AgendamentoController@atualizar');
-$router->add('GET', '/admin/agendamentos/excluir/{id}', 'AgendamentoController@excluir');
+$router->add('GET', '/admin/agendamentos/create', 'AgendamentoController@create');
+$router->add('POST', '/admin/agendamentos/store', 'AgendamentoController@store');
+$router->add('GET', '/admin/agendamentos/edit/{id}', 'AgendamentoController@edit');
+$router->add('POST', '/admin/agendamentos/update/{id}', 'AgendamentoController@update');
+$router->add('GET', '/admin/agendamentos/delete/{id}', 'AgendamentoController@delete');
 
 // ================= CAIXA / PAGAMENTOS ADMIN =================
 $router->add('GET', '/admin/caixa', 'CaixaController@index');

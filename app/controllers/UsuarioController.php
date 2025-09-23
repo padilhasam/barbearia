@@ -46,6 +46,17 @@ class UsuarioController extends Controller
         $status = $_POST['status'] ?? 'ATIVO';
 
         $usuarioModel = $this->model('Usuario');
+
+        // Evita duplicação de email
+        if ($usuarioModel->findByEmail($email)) {
+            $this->view('usuarios/register', [
+                'erro' => "E-mail já está cadastrado!",
+                'nome' => $nome,
+                'email' => $email
+            ], 'administrador');
+            return;
+        }
+
         $usuarioModel->create([
             'nome'   => $nome,
             'email'  => $email,
@@ -56,6 +67,7 @@ class UsuarioController extends Controller
 
         $this->redirect(BASE_URL . '/admin/usuarios');
     }
+
 
     // ==================== LISTAGEM ====================
     public function index()
@@ -86,15 +98,20 @@ class UsuarioController extends Controller
         $data = [
             'nome'   => trim($_POST['nome']),
             'email'  => trim($_POST['email']),
-            'senha'  => password_hash($_POST['senha'], PASSWORD_DEFAULT),
             'perfil' => $_POST['perfil'] ?? 'BARBEIRO',
             'status' => $_POST['status'] ?? 'ATIVO'
         ];
+
+        // Só atualiza a senha se o campo foi preenchido
+        if (!empty($_POST['senha'])) {
+            $data['senha'] = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+        }
 
         $usuarioModel->update($id, $data);
 
         $this->redirect(BASE_URL . '/admin/usuarios');
     }
+
 
     // ==================== EXCLUSÃO ====================
     public function delete($id)
