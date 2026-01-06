@@ -37,9 +37,9 @@
                         <i class="bi bi-person-circle me-1"></i> Admin
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end bg-light text-dark">
-                        <li><a class="dropdown-item text-dark" href="<?= BASE_URL ?>/admin/perfil">Perfil</a></li>
+                        <li><a class="dropdown-item bg-light text-dark" href="<?= BASE_URL ?>/admin/perfil">Perfil</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="<?= BASE_URL ?>/admin/logout">Sair</a></li>
+                        <li><a class="dropdown-item bg-light text-danger" href="<?= BASE_URL ?>/admin/logout">Sair</a></li>
                     </ul>
                 </li>
             </ul>

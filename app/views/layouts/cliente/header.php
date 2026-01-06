@@ -47,9 +47,9 @@ $clienteNome = isset($cliente['nome']) ? htmlspecialchars($cliente['nome']) : 'C
                         <i class="bi bi-person-circle me-1"></i> <?= $clienteNome ?>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end bg-light text-dark">
-                        <li><a class="dropdown-item text-dark" href="<?= BASE_URL ?>/clientes/perfil">Perfil</a></li>
+                        <li><a class="dropdown-item bg-light text-dark" href="<?= BASE_URL ?>/clientes/perfil">Perfil</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" href="<?= BASE_URL ?>/clientes/logout">Sair</a></li>
+                        <li><a class="dropdown-item bg-light text-danger" href="<?= BASE_URL ?>/clientes/logout">Sair</a></li>
                     </ul>
                 </li>
             </ul>
