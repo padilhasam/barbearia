@@ -1,14 +1,14 @@
 <div class="container my-4">
-    <h2 class="mb-4">💳 Pagamentos</h2>
+    <h2 class="mb-4">💳 Clientes</h2>
 
-    <!-- Botão Novo Pagamento -->
+    <!-- Botão Novo Cleinte -->
     <div class="mb-3">
-        <a href="/pagamentos/adicionar" class="btn btn-success">
-            ➕ Novo Pagamento
+        <a href="/clientes/adicionar" class="btn btn-success">
+            ➕ Novo Cleinte
         </a>
     </div>
 
-    <!-- Tabela de Pagamentos -->
+    <!-- Tabela de Clientes -->
     <div class="table-responsive shadow-sm rounded">
         <table class="table table-hover align-middle">
             <thead class="table-dark">
@@ -23,8 +23,8 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if (!empty($pagamentos)) : ?>
-                    <?php foreach ($pagamentos as $p) : ?>
+                <?php if (!empty($clientes)) : ?>
+                    <?php foreach ($clientes as $p) : ?>
                         <tr>
                             <td><?= $p['id'] ?></td>
                             <td><?= htmlspecialchars($p['cliente']); ?></td>
@@ -37,7 +37,7 @@
                             </td>
                             <td><?= date('d/m/Y H:i', strtotime($p['data_pagamento'])); ?></td>
                             <td>
-                                <a href="/pagamentos/detalhes/<?= $p['id'] ?>" class="btn btn-sm btn-primary">
+                                <a href="/clientes/detalhes/<?= $p['id'] ?>" class="btn btn-sm btn-primary">
                                     🔍 Detalhes
                                 </a>
                             </td>
@@ -45,7 +45,7 @@
                     <?php endforeach; ?>
                 <?php else : ?>
                     <tr>
-                        <td colspan="7" class="text-center text-muted">Nenhum pagamento registrado.</td>
+                        <td colspan="7" class="text-center text-muted">Nenhum cliente registrado.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>

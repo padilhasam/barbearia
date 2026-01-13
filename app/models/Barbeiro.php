@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../core/Model.php';
 
 class Barbeiro extends Model {
 
-    public static function all() {
+    public static function getAll() {
         $stmt = self::$db->query("SELECT b.*, u.nome as usuario_nome 
                                   FROM barbeiros b 
                                   JOIN usuarios u ON u.id = b.usuario_id");

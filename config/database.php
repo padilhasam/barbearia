@@ -1,9 +1,9 @@
 <?php
 
     return [
-        'host'    => 'localhost',
+        'host'    => '127.0.0.1:3306',
         'dbname'  => 'barbearia',
         'usuario' => 'root',
-        'senha'   => 'samuel06',
+        'senha'   => '78951020',
         'charset' => 'utf8mb4',
     ];

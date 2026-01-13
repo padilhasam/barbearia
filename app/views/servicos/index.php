@@ -1,5 +1,3 @@
-<?php include __DIR__ . '/../layouts/header.php'; ?>
-
 <div class="container my-4">
     <h2 class="mb-4">💈 Serviços</h2>
 
@@ -51,5 +49,3 @@
         </table>
     </div>
 </div>
-
-<?php include __DIR__ . '/../layouts/footer.php'; ?>

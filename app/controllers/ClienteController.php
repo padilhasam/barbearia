@@ -4,12 +4,26 @@ require_once __DIR__ . '/../helpers/SessionHelper.php';
 
 class ClienteController extends Controller
 {
+    private $clienteModel;
+
+    public function __construct()
+    {
+        $this->clienteModel = new Cliente();
+    }
+
     // ==================== SESSÃO ====================
     private function startSession()
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
+    }
+
+    // ==================== Listagem de clientes (ADMIN) ====================
+    public function index()
+    {
+        $clientes = $this->clienteModel->getAll();
+        $this->view('clientes/index', compact('clientes'), 'administrador');
     }
 
     // ==================== LOGIN ====================
@@ -78,8 +92,8 @@ class ClienteController extends Controller
         exit;
     }
 
-    // ==================== DASHBOARD ====================
-    public function index()
+    // ==================== Cliente ====================
+    public function cliente()
     {
         $cliente = $this->getClienteLogado();
         if (!$cliente) {

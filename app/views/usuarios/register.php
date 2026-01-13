@@ -9,7 +9,7 @@ $acao = $editar ? '/admin/usuarios/atualizar/' . $usuario['id'] : '/admin/usuari
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3 class="text-light"><?= $editar ? 'Editar Usuário' : 'Cadastrar Usuário' ?></h3>
-        <a href="/admin/usuarios" class="btn btn-outline-secondary">
+        <a onclick="window.history.back()" class="btn btn-outline-secondary">
             <i class="bi bi-arrow-left me-2"></i>Voltar
         </a>
     </div>
@@ -59,7 +59,7 @@ $acao = $editar ? '/admin/usuarios/atualizar/' . $usuario['id'] : '/admin/usuari
                     <button type="submit" class="btn btn-success me-2">
                         <i class="bi bi-check-lg me-1"></i><?= $editar ? 'Atualizar' : 'Salvar' ?>
                     </button>
-                    <a href="/admin/usuarios" class="btn btn-secondary">Cancelar</a>
+                    <a onclick="window.history.back()" class="btn btn-secondary">Cancelar</a>
                 </div>
             </form>
         </div>

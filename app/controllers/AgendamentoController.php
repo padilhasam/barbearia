@@ -33,7 +33,7 @@ class AgendamentoController extends Controller
         $clientes = $this->clienteModel->getAll();
         $servicos = $this->servicoModel->getAll();
         $barbeiros = $this->barbeiroModel->getAll();
-        $this->view('agendamentos/create', compact('clientes', 'servicos', 'barbeiros'));
+        $this->view('agendamentos/create', compact('clientes', 'servicos', 'barbeiros'), 'administrador');
     }
 
     // ================= Salvar novo agendamento =================
