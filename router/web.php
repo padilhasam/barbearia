@@ -30,8 +30,21 @@ $router->add('GET', '/clientes/perfil', 'ClienteController@perfil');
 // ================= PAINEL ADMIN =================
 $router->add('GET', '/admin', 'DashboardController@login');            // Tela login admin
 $router->add('POST', '/admin/login', 'DashboardController@autenticar'); // Autenticação admin
+$router->add('GET', '/admin/perfil', 'AdministradorController@perfil');    
 $router->add('GET', '/admin/painel', 'DashboardController@painel');    // Dashboard/admin.php
 $router->add('GET', '/admin/logout', 'DashboardController@logout');     // Logout
+
+// ================= CLIENTES ADMIN =================
+$router->add('GET', '/admin/clientes', 'ClienteController@index');            // Listar clientes
+
+// ================= BARBEIROS ADMIN =================
+$router->add('GET', '/admin/barbeiros', 'BarbeiroController@index');            // Listar barbeiros
+
+// ================= PAGAMENTOS ADMIN =================
+$router->add('GET', '/admin/pagamentos', 'PagamentoController@index');            // Listar pagamentos
+
+// ================= RELATORIOS ADMIN =================
+$router->add('GET', '/admin/relatorios', 'RelatorioController@index');            // Relatorio
 
 // ================= USUÁRIOS ADMIN =================
 $router->add('GET', '/admin/usuarios', 'UsuarioController@index');            // Listar usuários

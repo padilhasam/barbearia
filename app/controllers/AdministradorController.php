@@ -1,15 +1,14 @@
 <?php
 
 require_once __DIR__ . '/../../core/Controller.php';
-require_once __DIR__ . '/../models/Servico.php';
 
-class ServicoController extends Controller
+class AdministradorController extends Controller
 {
-    private $servicoModel;
-
+    // private $barbeiroModel;
+    
     public function __construct()
     {
-        $this->servicoModel = new Servico();
+        // $this->barbeiroModel = new Servico();
     }
 
     // ==================== SESSÃO ====================
@@ -21,9 +20,9 @@ class ServicoController extends Controller
     }
 
     // ================= Página de serviço =================
-    public function index()
+    public function perfil()
     {
-        $servicos = $this->servicoModel->getAll();
-        $this->view('servicos/index', compact('servicos'), 'administrador');
+        // $barbeiros = $this->barbeiroModel->getAll();
+        $this->view('perfil/admin', [], 'administrador');
     }
 }

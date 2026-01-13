@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../layouts/administrador/header.php';
 ?>
 
-<div class="container-fluid py-4">
+<div class="container py-4">
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h3>Agendamentos</h3>
